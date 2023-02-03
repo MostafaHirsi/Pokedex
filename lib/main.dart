@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/screens/login_page.dart';
+import 'package:flutter/services.dart';
+import 'package:injector/injector.dart';
+
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  Injector.appInstance.registerDependency<GlobalKey<NavigatorState>>(
+      () => GlobalKey<NavigatorState>());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +23,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: const HomeScreen(),
+      routes: {
+        '/': (context) => const HomeScreen(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomeScreen.routeName:
+          default:
+            return PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const HomeScreen(),
+            );
+        }
+      },
     );
   }
 }

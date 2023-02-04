@@ -1,12 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokedex/models/item_link.dart';
+import 'package:pokedex/models/pokemon_details/types/type.dart';
 
 part 'type.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PastType {
   final ItemLink generation;
-  final List<ItemLink> types;
+  final List<PokemonType> types;
 
   PastType(this.generation, this.types);
 

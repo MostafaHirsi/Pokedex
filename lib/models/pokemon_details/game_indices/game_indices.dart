@@ -3,7 +3,7 @@ import 'package:pokedex/models/item_link.dart';
 
 part 'game_indices.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class GameIndices {
   final int gameIndex;
   final ItemLink version;

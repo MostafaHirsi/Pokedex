@@ -3,7 +3,7 @@ import 'package:pokedex/models/pokemon_details/sprites/sprites.dart';
 
 part 'generation.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation1 {
   final Sprites redBlue;
   final Sprites yellow;
@@ -14,7 +14,7 @@ class Generation1 {
       _$Generation1FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation2 {
   final Sprites crystal;
   final Sprites gold;
@@ -26,7 +26,7 @@ class Generation2 {
       _$Generation2FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation3 {
   final Sprites emerald;
   final Sprites fireredLeafgreen;
@@ -38,7 +38,7 @@ class Generation3 {
       _$Generation3FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation4 {
   final Sprites diamondPearl;
   final Sprites heartgoldSoulsilver;
@@ -50,7 +50,7 @@ class Generation4 {
       _$Generation4FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation5 {
   final Sprites blackWhite;
 
@@ -60,7 +60,7 @@ class Generation5 {
       _$Generation5FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation6 {
   final Sprites omegarubyAlphasapphire;
   final Sprites xY;
@@ -71,7 +71,7 @@ class Generation6 {
       _$Generation6FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation7 {
   final Sprites icons;
   final Sprites ultraSunUltraMoon;
@@ -82,7 +82,7 @@ class Generation7 {
       _$Generation7FromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
 class Generation8 {
   final Sprites icons;
 

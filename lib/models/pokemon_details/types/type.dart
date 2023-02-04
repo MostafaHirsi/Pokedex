@@ -3,9 +3,9 @@ import 'package:pokedex/models/item_link.dart';
 
 part 'type.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PokemonType {
-  final String slot;
+  final int slot;
   final ItemLink type;
 
   PokemonType(this.slot, this.type);

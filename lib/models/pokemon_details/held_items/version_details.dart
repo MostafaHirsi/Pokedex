@@ -3,7 +3,7 @@ import 'package:pokedex/models/item_link.dart';
 
 part 'version_details.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class VersionDetail {
   final int rarity;
   final ItemLink version;

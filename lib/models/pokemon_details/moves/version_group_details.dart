@@ -3,7 +3,7 @@ import 'package:pokedex/models/item_link.dart';
 
 part 'version_group_details.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class VersionGroupDetails {
   final int levelLearnedAt;
   final ItemLink versionGroup;

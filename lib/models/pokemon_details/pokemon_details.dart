@@ -12,9 +12,9 @@ import 'types/type.dart';
 
 part 'pokemon_details.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PokemonDetails {
-  final String id;
+  final int id;
   final String name;
   final int baseExperience;
   final int height;
@@ -22,16 +22,16 @@ class PokemonDetails {
   final int order;
   final int weight;
   final String locationAreaEncounters;
-  final List<Ability> abilities;
-  final List<ItemLink> forms;
-  final List<GameIndices> gameIndices;
-  final List<HeldItem> heldItems;
-  final List<Move> moves;
-  final List<ItemLink> species;
-  final List<Stat> stats;
-  final List<PokemonType> types;
-  final List<PastType> pastTypes;
-  final Sprites sprites;
+  final List<Ability>? abilities;
+  final List<ItemLink>? forms;
+  final List<GameIndices>? gameIndices;
+  final List<HeldItem>? heldItems;
+  final List<Move>? moves;
+  final ItemLink? species;
+  final List<Stat>? stats;
+  final List<PokemonType>? types;
+  final List<PastType>? pastTypes;
+  final Sprites? sprites;
 
   PokemonDetails(
       this.id,

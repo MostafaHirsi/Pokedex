@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../item_link.dart';
 part 'ability.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Ability {
   final bool isHidden;
   final int slot;

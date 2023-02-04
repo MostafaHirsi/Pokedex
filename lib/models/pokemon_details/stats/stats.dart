@@ -3,7 +3,7 @@ import 'package:pokedex/models/item_link.dart';
 
 part 'stats.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Stat {
   final int baseStat;
   final int effort;

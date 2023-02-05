@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokedex/models/pokemon_details/sprites/sprites.dart';
 
 part 'generation.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation1 {
+class Generation1 extends Equatable {
   final Sprites redBlue;
   final Sprites yellow;
 
@@ -12,10 +13,13 @@ class Generation1 {
 
   factory Generation1.fromJson(Map<String, dynamic> json) =>
       _$Generation1FromJson(json);
+
+  @override
+  List<Object?> get props => [redBlue, yellow];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation2 {
+class Generation2 extends Equatable {
   final Sprites crystal;
   final Sprites gold;
   final Sprites silver;
@@ -24,10 +28,13 @@ class Generation2 {
 
   factory Generation2.fromJson(Map<String, dynamic> json) =>
       _$Generation2FromJson(json);
+
+  @override
+  List<Object?> get props => [crystal, gold, silver];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation3 {
+class Generation3 extends Equatable {
   final Sprites emerald;
   final Sprites fireredLeafgreen;
   final Sprites rubySapphire;
@@ -36,10 +43,13 @@ class Generation3 {
 
   factory Generation3.fromJson(Map<String, dynamic> json) =>
       _$Generation3FromJson(json);
+
+  @override
+  List<Object?> get props => [emerald, fireredLeafgreen, rubySapphire];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation4 {
+class Generation4 extends Equatable {
   final Sprites diamondPearl;
   final Sprites heartgoldSoulsilver;
   final Sprites platinum;
@@ -48,20 +58,26 @@ class Generation4 {
 
   factory Generation4.fromJson(Map<String, dynamic> json) =>
       _$Generation4FromJson(json);
+
+  @override
+  List<Object?> get props => [diamondPearl, heartgoldSoulsilver, platinum];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation5 {
+class Generation5 extends Equatable {
   final Sprites blackWhite;
 
   Generation5(this.blackWhite);
 
   factory Generation5.fromJson(Map<String, dynamic> json) =>
       _$Generation5FromJson(json);
+
+  @override
+  List<Object?> get props => [blackWhite];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation6 {
+class Generation6 extends Equatable {
   final Sprites omegarubyAlphasapphire;
   final Sprites xY;
 
@@ -69,10 +85,13 @@ class Generation6 {
 
   factory Generation6.fromJson(Map<String, dynamic> json) =>
       _$Generation6FromJson(json);
+
+  @override
+  List<Object?> get props => [omegarubyAlphasapphire, xY];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation7 {
+class Generation7 extends Equatable {
   final Sprites icons;
   final Sprites ultraSunUltraMoon;
 
@@ -80,14 +99,20 @@ class Generation7 {
 
   factory Generation7.fromJson(Map<String, dynamic> json) =>
       _$Generation7FromJson(json);
+
+  @override
+  List<Object?> get props => [icons, ultraSunUltraMoon];
 }
 
 @JsonSerializable(fieldRename: FieldRename.kebab, includeIfNull: false)
-class Generation8 {
+class Generation8 extends Equatable {
   final Sprites icons;
 
   Generation8(this.icons);
 
   factory Generation8.fromJson(Map<String, dynamic> json) =>
       _$Generation8FromJson(json);
+
+  @override
+  List<Object?> get props => [icons];
 }

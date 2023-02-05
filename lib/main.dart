@@ -1,10 +1,14 @@
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injector/injector.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokedex/blocs/search/search_bloc.dart';
+import 'package:pokedex/services/poke_api_service.dart';
 import 'package:pokedex/utils/padding.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screens/home_screen/home_screen.dart';
 
@@ -15,6 +19,10 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Injector.appInstance.registerDependency<GlobalKey<NavigatorState>>(
       () => GlobalKey<NavigatorState>());
+  Dio dio = Dio();
+  Injector.appInstance.registerDependency<Dio>(() => dio);
+  Injector.appInstance
+      .registerDependency<PokeApiService>(() => PokeApiService(dio));
   runApp(const App());
 }
 
@@ -25,6 +33,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<NavigatorState> navigatorKey =
         Injector.appInstance.get<GlobalKey<NavigatorState>>();
+    PokeApiService pokeApiService = Injector.appInstance.get<PokeApiService>();
     return MaterialApp(
       title: 'Flutter Demo',
       navigatorKey: navigatorKey,
@@ -90,15 +99,18 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
       routes: {},
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case HomeScreen.routeName:
           default:
             return PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  const HomeScreen(),
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return BlocProvider(
+                  create: (context) => SearchBloc(pokeApiService),
+                  child: HomeScreen(),
+                );
+              },
             );
         }
       },

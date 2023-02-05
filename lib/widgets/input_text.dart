@@ -53,11 +53,14 @@ class _InputTextState extends State<InputText> {
         return TextField(
           controller: widget.controller,
           onSubmitted: widget.onSubmitted,
+          focusNode: _focusNode,
           decoration: InputDecoration(
-            prefixIcon: Icon(
-              widget.prefixIcon,
-              color: isFocus ? Colors.black : Colors.grey.shade400,
-            ),
+            prefixIcon: widget.prefixIcon != null
+                ? Icon(
+                    widget.prefixIcon,
+                    color: isFocus ? Colors.black : Colors.grey.shade400,
+                  )
+                : null,
             hintText: widget.hintText,
           ),
         );

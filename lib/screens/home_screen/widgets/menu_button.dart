@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pokedex/utils/padding.dart';
-import 'package:pokedex/utils/svg_assets.dart';
+import 'package:pokedex/utils/assets.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({
@@ -26,6 +26,7 @@ class MenuButton extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(
               Icons.menu_rounded,
+              color: Colors.black,
             ),
           ),
         ],

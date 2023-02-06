@@ -54,6 +54,7 @@ class _InputTextState extends State<InputText> {
           controller: widget.controller,
           onSubmitted: widget.onSubmitted,
           focusNode: _focusNode,
+          textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon != null
                 ? Icon(

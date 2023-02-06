@@ -14,7 +14,7 @@ class PokeApiService {
   }
 
   Future<PokemonDetails?> getPokemonByName(String name) async {
-    Response response = await dio.get('/pokemon/$name');
+    Response response = await dio.get('/pokemon/${name.toLowerCase()}');
     if (response.statusCode == 404) {
       return null;
     }

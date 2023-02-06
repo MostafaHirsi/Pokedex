@@ -46,48 +46,72 @@ class HomeScreen extends StatelessWidget {
           children: [
             buildHeading(context),
             buildSubHeading(context),
-            InputText(
-              onSubmitted: onSubmitted,
-              hintText: 'Jigglypuff',
-              prefixIcon: Icons.search,
-              controller: TextEditingController(text: "pikachu"),
-            ),
+            buildSearchField(),
             if (searchState is SearchError || searchState is SearchLoading)
               Spacer(
                 flex: 2,
               ),
-            if (searchState is SearchLoading)
-              Expanded(
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  child: Image.asset(
-                    GifAssets.pokeballShake,
-                    height: 50,
-                    width: 50,
-                  ),
-                ),
-              ),
+            if (searchState is SearchLoading) buildLoadingIcon(),
             if (searchState is SearchComplete &&
                 searchState.pokemonDetails != null)
-              PokemonCard(
-                pokemonDetails: searchState.pokemonDetails!,
-              ),
-            if (searchState is SearchError)
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Oh no! Looks like something went wrong",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              ),
+              buildResultsList(searchState),
+            if (searchState is SearchError) buildError(context),
             if (searchState is SearchError || searchState is SearchLoading)
               Spacer(flex: 4)
           ],
         ),
       ),
+    );
+  }
+
+  Expanded buildError(BuildContext context) {
+    return Expanded(
+      child: Container(
+        alignment: Alignment.center,
+        child: Text(
+          "Oh no! Looks like something went wrong",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ),
+    );
+  }
+
+  Expanded buildResultsList(SearchComplete searchState) {
+    return Expanded(
+      child: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 24 / 20,
+          crossAxisSpacing: UIPadding.xxs,
+          mainAxisSpacing: UIPadding.xs,
+        ),
+        children: [
+          PokemonCard(pokemonDetails: searchState.pokemonDetails!),
+        ],
+      ),
+    );
+  }
+
+  Expanded buildLoadingIcon() {
+    return Expanded(
+      child: Container(
+        height: 50,
+        width: 50,
+        child: Image.asset(
+          GifAssets.pokeballShake,
+          height: 50,
+          width: 50,
+        ),
+      ),
+    );
+  }
+
+  InputText buildSearchField() {
+    return InputText(
+      onSubmitted: onSubmitted,
+      hintText: 'Jigglypuff',
+      prefixIcon: Icons.search,
+      controller: TextEditingController(),
     );
   }
 

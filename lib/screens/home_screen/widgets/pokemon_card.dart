@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/models/pokemon_details/pokemon_details.dart';
-import 'package:pokedex/models/pokemon_details/types/type.dart';
+import 'package:pokedex/screens/detail_screen/detail_screen.dart';
 import 'package:pokedex/utils/assets.dart';
 import 'package:pokedex/utils/colors.dart';
 import 'package:pokedex/utils/padding.dart';
@@ -19,59 +18,65 @@ class PokemonCard extends StatelessWidget {
     String spriteImage = pokemonDetails.sprites!.frontDefault ?? "";
     Color color =
         PokemonColors.pokemonTypeColors[pokemonDetails.types!.first.type.name]!;
-    return Card(
-      elevation: 10,
-      color: Colors.transparent,
-      child: Container(
-          padding: EdgeInsets.only(
-            top: UIPadding.s,
-            left: UIPadding.s,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(
-                12,
-              ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, DetailScreen.routeName,
+            arguments: pokemonDetails);
+      },
+      child: Card(
+        elevation: 10,
+        color: Colors.transparent,
+        child: Container(
+            padding: EdgeInsets.only(
+              top: UIPadding.s,
+              left: UIPadding.s,
             ),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomRight,
-              stops: [0.1, 0.9],
-              colors: [
-                Color.alphaBlend(color.withOpacity(0.8), Colors.white),
-                Color.alphaBlend(color.withOpacity(0.7), Colors.white),
-              ],
-            ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: -50,
-                right: -60,
-                child: SvgPicture.asset(
-                  SvgAssets.pokeball,
-                  color: Colors.grey.shade50.withOpacity(0.14),
-                  width: 150,
-                  height: 150,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(
+                  12,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  buildPokemonName(context),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildPokemonTypeTags(color),
-                      buildPokemonImage(spriteImage)
-                    ],
-                  ),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomRight,
+                stops: [0.1, 0.9],
+                colors: [
+                  Color.alphaBlend(color.withOpacity(0.8), Colors.white),
+                  Color.alphaBlend(color.withOpacity(0.7), Colors.white),
                 ],
               ),
-            ],
-          )),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: -50,
+                  right: -60,
+                  child: SvgPicture.asset(
+                    SvgAssets.pokeball,
+                    color: Colors.grey.shade50.withOpacity(0.14),
+                    width: 150,
+                    height: 150,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    buildPokemonName(context),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildPokemonTypeTags(color),
+                        buildPokemonImage(spriteImage)
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ),
     );
   }
 

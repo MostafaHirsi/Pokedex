@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:injector/injector.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex/blocs/search/search_bloc.dart';
+import 'package:pokedex/models/pokemon_details/pokemon_details.dart';
+import 'package:pokedex/screens/detail_screen/detail_screen.dart';
 import 'package:pokedex/services/poke_api_service.dart';
 import 'package:pokedex/utils/padding.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +19,6 @@ void main() {
   DartPluginRegistrant.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  Injector.appInstance.registerDependency<GlobalKey<NavigatorState>>(
-      () => GlobalKey<NavigatorState>());
   Dio dio = Dio();
   Injector.appInstance.registerDependency<Dio>(() => dio);
   Injector.appInstance
@@ -31,13 +31,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<NavigatorState> navigatorKey =
-        Injector.appInstance.get<GlobalKey<NavigatorState>>();
     PokeApiService pokeApiService = Injector.appInstance.get<PokeApiService>();
     return MaterialApp(
-      title: 'Flutter Demo',
-      navigatorKey: navigatorKey,
+      title: 'Pokedex',
       theme: ThemeData(
+        fontFamily: 'Lato',
         colorScheme: const ColorScheme(
           brightness: Brightness.dark,
           primary: Color(0xFF5D5E7D),
@@ -54,6 +52,16 @@ class App extends StatelessWidget {
           onSecondaryContainer: Colors.white,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
+        tabBarTheme: const TabBarTheme(
+          unselectedLabelStyle:
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+          unselectedLabelColor: Colors.grey,
+          labelColor: Colors.black,
+        ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
           color: Colors.transparent,
@@ -99,9 +107,16 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      routes: {},
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case DetailScreen.routeName:
+            return PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                PokemonDetails pokemonDetails =
+                    settings.arguments as PokemonDetails;
+                return DetailScreen(pokemonDetails: pokemonDetails);
+              },
+            );
           case HomeScreen.routeName:
           default:
             return PageRouteBuilder(

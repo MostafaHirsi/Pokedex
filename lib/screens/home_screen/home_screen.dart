@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
             buildSubHeading(context),
             buildSearchField(),
             if (searchState is SearchError || searchState is SearchLoading)
-              Spacer(
+              const Spacer(
                 flex: 2,
               ),
             if (searchState is SearchLoading) buildLoadingIcon(),
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
               buildResultsList(searchState),
             if (searchState is SearchError) buildError(context),
             if (searchState is SearchError || searchState is SearchLoading)
-              Spacer(flex: 4)
+              const Spacer(flex: 4)
           ],
         ),
       ),

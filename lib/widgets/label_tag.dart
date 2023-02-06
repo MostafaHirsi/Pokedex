@@ -6,17 +6,21 @@ import 'package:pokedex/utils/string.dart';
 class LabelTag extends StatelessWidget {
   final String label;
   final Color color;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
   const LabelTag({
     super.key,
     required this.label,
     required this.color,
+    this.margin,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: UIPadding.xxs),
-      padding: EdgeInsets.symmetric(vertical: UIPadding.xs),
+      margin: margin ?? EdgeInsets.symmetric(vertical: UIPadding.xxs),
+      padding: padding ?? EdgeInsets.symmetric(vertical: UIPadding.xs),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color,
@@ -27,7 +31,10 @@ class LabelTag extends StatelessWidget {
       child: Text(
         label.capitalize(),
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: Colors.white, fontWeight: FontWeight.w600, letterSpacing: 0),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0,
+            ),
       ),
     );
   }

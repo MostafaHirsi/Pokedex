@@ -1,18 +1,35 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/blocs/search/search_bloc.dart';
-import 'package:pokedex/screens/home_screen/widgets/clefairy.dart';
 import 'package:pokedex/screens/home_screen/widgets/pokemon_card.dart';
 import 'package:pokedex/utils/assets.dart';
 import 'package:pokedex/utils/padding.dart';
+import 'package:pokedex/utils/pokemon_list.dart';
+import 'package:pokedex/utils/string.dart';
 import 'package:pokedex/widgets/input_text.dart';
 
 import 'widgets/menu_button.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String routeName = "HomeScreen";
-  late SearchBloc searchBloc;
+
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late SearchBloc searchBloc;
+  bool isLoading = false;
+  List<String> suggestions = [];
+
+  Timer? _debounce;
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +123,68 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  InputText buildSearchField() {
-    return InputText(
-      onSubmitted: onSubmitted,
-      hintText: 'Jigglypuff',
-      prefixIcon: Icons.search,
-      controller: TextEditingController(),
+  Widget buildSearchField() {
+    return Autocomplete<Map<String, dynamic>>(
+      displayStringForOption: (option) {
+        String optionName = option["name"];
+        return optionName.capitalize();
+      },
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        if (textEditingValue.text == '') {
+          return const [];
+        }
+        return PokemonList.list.where((Map<String, dynamic> option) {
+          return option['name'].contains(textEditingValue.text.toLowerCase());
+        });
+      },
+      optionsViewBuilder: buildOptions,
+      onSelected: (Map<String, dynamic> selection) {
+        searchBloc.add(CommitSearchEvent(selection['id']));
+      },
+      fieldViewBuilder:
+          (context, textEditingController, focusNode, onFieldSubmitted) {
+        return InputText(
+          onSubmitted: onSubmitted,
+          hintText: 'Jigglypuff',
+          focusNode: focusNode,
+          prefixIcon: Icons.search,
+          controller: textEditingController,
+          isLoading: isLoading,
+        );
+      },
+    );
+  }
+
+  Widget buildOptions(context, onSelected, options) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Material(
+        color: Colors.white,
+        elevation: 4.0,
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.88,
+          child: ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8.0),
+            itemCount: options.length,
+            separatorBuilder: (context, i) {
+              return Divider(
+                color: Colors.grey,
+              );
+            },
+            itemBuilder: (BuildContext context, int index) {
+              String currentOption = options.elementAt(index)['name'];
+              return GestureDetector(
+                onTap: () => onSelected(options.elementAt(index)),
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: UIPadding.xxs),
+                  child: Text(currentOption.capitalize()),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 

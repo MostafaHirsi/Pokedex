@@ -42,6 +42,14 @@ class DetailScreen extends StatelessWidget {
             buildBackgroundImage(imageSize),
             Details(pokemonDetails: pokemonDetails),
             Overview(pokemonDetails: pokemonDetails),
+            Positioned(
+              left: 20,
+              top: 45,
+              child: BackButton(
+                color: Colors.white,
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
           ],
         ),
       ),

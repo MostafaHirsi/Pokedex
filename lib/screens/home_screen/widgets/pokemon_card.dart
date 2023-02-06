@@ -100,8 +100,11 @@ class PokemonCard extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Transform.scale(
           scale: 1,
-          child: Image.network(
-            spriteImage,
+          child: Hero(
+            tag: "pokemon_image",
+            child: Image.network(
+              spriteImage,
+            ),
           ),
         ),
       ),

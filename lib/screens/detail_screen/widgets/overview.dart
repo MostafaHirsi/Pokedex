@@ -17,7 +17,9 @@ class Overview extends StatelessWidget {
     Color color =
         PokemonColors.pokemonTypeColors[pokemonDetails.types!.first.type.name]!;
     String spriteImage =
-        pokemonDetails.sprites!.other!.officialArtwork.frontDefault ?? "";
+        pokemonDetails.sprites!.other!.officialArtwork.frontDefault ??
+            pokemonDetails.sprites!.frontDefault ??
+            "";
     return Positioned(
       top: 90,
       bottom: MediaQuery.of(context).size.height / 2.1,
@@ -77,10 +79,13 @@ class Overview extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                child: Image.network(
-                  spriteImage,
-                  fit: BoxFit.fitHeight,
-                  filterQuality: FilterQuality.high,
+                child: Hero(
+                  tag: "pokemon_image",
+                  child: Image.network(
+                    spriteImage,
+                    fit: BoxFit.fitHeight,
+                    filterQuality: FilterQuality.high,
+                  ),
                 ),
               ),
             )
